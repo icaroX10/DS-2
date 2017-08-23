@@ -10,7 +10,7 @@ package enummain;
  * @author aluno
  */
 public class Comum extends Racao{
-    @Override public double desconto(double preco){
-        return super.kgPeso(this.getPeso());
+    @Override public double desconto(){
+        return super.kgPeso();
     }
 }

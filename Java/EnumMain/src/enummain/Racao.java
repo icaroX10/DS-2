@@ -31,7 +31,8 @@ abstract public class Racao {
         
     }
     
-    public double kgPeso(double pes){
+    public double kgPeso(){
+        double pes = this.peso;
         if(pes >= 0.1 && pes <= 3){
             return this.preco;
         }else if(pes >=4 && pes <= 10 ){
@@ -43,5 +44,5 @@ abstract public class Racao {
         }
     }
     
-    abstract public double desconto(double preco);
+    abstract public double desconto();
 }
