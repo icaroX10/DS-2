@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="pt-br">
+<head>
+  <meta charset="utf-8">
+	<title>Validação Angular</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+	
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	  <!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/validaController.js"></script> 
+</head>
+<body ng-controller="validaController">
+<div class="container">
+    <form class="col-lg-12" name="formulario">
+      <div class="form-group" ng-class="{'has-error' : formulario.nome.$invalid && formulario.nome.$pristine && formulario.sobrenome.$invalid && formulario.sobrenome.$pristine}">
+        <div class="row">
+          <div class="col-lg-6">
+            <label for="first_name">Nome</label>
+            <input placeholder="Nome" name="nome" type="text" class="form-control" ng-model="nome" ng-required="true">
+            <div class="alert alert-danger" role="alert" ng-if="formulario.nome.$invalid && !formulario.nome.$pristine">
+              <span>Não pode ser vazio</span>
+            </div>
+          </div>
+          
+          <div class="col-lg-6">
+            <label for="first_name">Sobrenome</label>
+            <input placeholder="Sobrenome" name="sobrenome" type="text" class="form-control" ng-model="sobrenome" ng-required="true" ng-minlength="3" ng-maxlength="100">
+            <div class="alert alert-danger" role="alert" ng-if="formulario.sobrenome.$error.minlength && formulario.sobrenome.$touched">
+              <span>Escreva no Minimo 3 caracter</span>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="formulario.sobrenome.$error.maxlength && formulario.sobrenome.$touched">
+              <span>Escreva no Maximo 100 caracter</span>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : formulario.email.$invalid && formulario.email.$pristine}">
+      <div class="row">
+          <div class="col-lg-6">
+            <label for="first_name">Email</label>
+            <input placeholder="Email" name="email" type="email" class="form-control" ng-model="email" ng-required="true">
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="formulario.email.$invalid && !formulario.email.$pristine">
+              <span>Email Invalido</span>
+          </div>
+          <div ng-repeat="item in listemail">
+            <div class="alert alert-danger" role="alert" ng-if="email == item.email">
+                <span>Email ja existe</span>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : formulario.senha.$invalid && formulario.senha.$pristine}">
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="first_name">Senha</label>
+          <input placeholder="Senha" ng-minlength="8" ng-maxlength="18" name="senha" type="password" class="form-control" ng-model="senha" ng-required="true">
+          <div class="alert alert-danger" role="alert" ng-if="!formulario.senha.$pristine && formulario.senha.$error.minlength">
+              <span>Senha no minimo 8 caracter</span>
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="!formulario.senha.$pristine && formulario.senha.$error.maxlength">
+              <span>Senha no maximo 18 caracter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : formulario.Csenha.$invalid && formulario.Csenha.$pristine}">
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="first_name">Confirmar Senha</label>
+          <input placeholder="Confirmar Senha" name="Csenha" type="password" class="form-control" ng-model="Csenha" ng-required="true" ng-minlength="8" ng-maxlength="18">
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="senha != Csenha">
+              <span>Senha não esta igual</span>
+          </div>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error : formulario.ano.$invalid && formulario.ano.$pristine'}">
+      <div class="row">
+          <div class="col-lg-2">
+            <label for="first_name">Dias</label>
+            <input type="text" class="form-control" ng-model="dias">
+          </div>
+          <div class="col-lg-2">
+            <label for="first_name">Mes</label>
+             <select ng-model="mes">
+              <option ng-selected="true" disabled > Mês</option>
+                <option ng-repeat="item in meses">{{item.mes}}</option>
+              </select> 
+          </div>
+          <div class="col-lg-2">
+            <label for="first_name">Ano</label>
+            <input type="text" class="form-control" ng-model="ano" name="ano">
+            <input type="hidden" name="anoAtual" ng-model="anoAtual" value="">
+          </div>
+          <div class="alert alert-danger" role="alert" ng-if="ano == anoAtual">2017
+              <span>Você não nasceu esse ano</span>
+          </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-6">
+          <label for="first_name">Sexo</label>
+            <select  ng-model="sexo">
+              <option selected="true" disabled value="0">Sou do Sexo</option>
+              <option value="1">Masculino</option>
+              <option value="2">Feminino</option>
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-6">
+          <label>Local</label>
+          <select ng-model="local">
+            <option ng-repeat="item in local">{{item.cidade}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <input type="submit" name="Enviar" class="btn btn-primary" ng-disabled="!formulario.$valid">
+</form>
+</div>
+
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<script type="text/javascript" src="js/bootstrap.min.js"></script> 
+
+
+</body>
+</html>
